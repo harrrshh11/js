@@ -1,0 +1,76 @@
+DOM (DOCUMENT OBJECT MODEL)
+-->It is used in web development used to interact and manipulate(change) the html documents.
+-->When the webpage loaded , the browser created DOM of the Webpage.
+-->When the html file is loadded into the browser , the javascript cannot understand the html document directly.
+-->document is the entry point of DOM.
+
+DOM:It is basically the representation of the same html document but in a tree-like structure composed of object.
+Keypoints:-
+1)Structure : The DOM represents the structure of HTML document as a tree.Each node in tree represents the elements, an attribute or text.
+2)Manipulation : using javascript , you can interact with elements (buttons, paragraphs) on the webpage, changing the content, styles, can add or remove elements.
+3)Event handling : you can handle the interactions, like click or pressing the button.
+4)W3C (World Wide Web Consortium) 
+
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <h1>Hello World</h1>
+        <p>This is a paragraph.</p>
+    </body>
+</html>
+
+
+Methods of Document Objects:
+-->used to interact with and manipulate the document.
+Getting Element:
+1)Getting Element by Id : 
+2)Getting Element by Class : class = group
+3)Getting Element by Tag : 
+4)Getting Element by Name selector: 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .a{
+            color: red;
+        }
+        .b{
+            color: green;
+        }
+        .d{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h1 class="a">Kiran</h1>
+    <h1 class="b">Ravi</h1>
+    <h1 class="a">Mahesh</h1>
+    <h1 class="b">Manoj</h1>
+    <h1 class="d">Ramya</h1>
+    <h1 class="d">Kavya</h1> -->
+
+    <!-- Kiran and Mahesh = red 
+     Ravi and Manoj = green
+     Ramya and Kavya = blue -->
+
+
+     <h1 id="aa">Kiran</h1>
+     <h1 id="b">Ravi</h1>
+     <h1 id="a">Mahesh</h1>
+     <h1 id="bb">Manoj</h1>
+     <h1 id="dd">Ramya</h1>
+     <h1 id="d">Kavya</h1>
+
+     <script>
+        let x=document.getElementById(a)
+        console.log(x);
+     </script>
+</body>
+</html>
