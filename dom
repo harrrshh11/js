@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="a" class="a">iam har</h1>
+    <h1 id="b" class="b">iam har</h1>`
+    <h1 id="c" class="a">iam harsh</h1>
+    <h1 class="a">iam hars </h1>
+    <script>
+       let a=document.getElementById('a')
+       console.log(x)
+
+    </script>
+    
+</body>
