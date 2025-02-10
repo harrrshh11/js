@@ -1,0 +1,35 @@
+import React ,{useState} from 'react';
+//import './App.css';
+
+// const Counter=()=>{
+//   const[count,setCount] = useState(0);
+//   ////current state=current
+//   ////function to update state =setCount
+//   ///useState() to intialize the state=0;
+
+//   return(
+//     <div className='bbb'>
+//       <h1 className='aaa'>You clicked {count} times</h1>
+//       <button className='ccc'  onClick={()=>setCount(count+1)} >Increment</button>
+//       <button className='ddd' onClick={()=>setCount(count-1)}>Decrement</button>
+//     </div>
+//   )
+// }
+
+// export default Counter;
+
+const ThemeToggler=()=>{
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    setTheme(prevTheme=>(prevTheme==='light' ? 'dark' : 'light'));
+    };
+    return (
+      <div>
+        <button style={{backgroundColor:theme==='light'?'white':'black',color:theme==='light'?'black':'white',textAlign:'center'}}></button>
+        <p>Current theme: {theme}</p>
+        <button onClick={toggleTheme}>Toggle Theme</button>
+        
+        </div>
+        );
+        }
+        export default ThemeToggler;
