@@ -1,0 +1,121 @@
+voting-backend/
+│── node_modules/
+│── config/
+│   ├── database.js
+│── models/
+│   ├── User.js
+│   ├── Vote.js
+│── routes/
+│   ├── authRoutes.js
+│   ├── voteRoutes.js
+│── controllers/
+│   ├── authController.js
+│   ├── voteController.js
+│── middleware/
+│   ├── authMiddleware.js
+│── server.js
+│── package.json
+│── .env
+
+config/database.js
+const { Sequelize } = require("sequelize");
+require("dotenv").config();
+
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+  host: process.env.DB_HOST,
+  dialect: "mysql",
+  logging: false,
+});
+
+sequelize
+  .authenticate()
+  .then(() => console.log("✅ MySQL Connected"))
+  .catch((err) => console.error("❌ MySQL Connection Error:", err));
+
+module.exports = sequelize;
+ User Model: models/User.js
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
+
+const User = sequelize.define("User", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  username: { type: DataTypes.STRING, allowNull: false, unique: true },
+  password: { type: DataTypes.STRING, allowNull: false },
+});
+
+module.exports = User;
+Vote Model: models/Vote.js
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
+
+const Vote = sequelize.define("Vote", {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  candidate: { type: DataTypes.STRING, allowNull: false },
+  userId: { type: DataTypes.INTEGER, allowNull: false },
+});
+
+module.exports = Vote;
+
+ Middleware: middleware/authMiddleware.js
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+module.exports = (req, res, next) => {
+  const token = req.header("Authorization");
+  if (!token) return res.status(401).json({ error: "Access Denied" });
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
+    next();
+  } catch (err) {
+    res.status(400).json({ error: "Invalid Token" });
+  }
+};
+ Voting Logic: controllers/voteController.js
+javascript
+Copy
+Edit
+
+const Vote = require("../models/Vote");
+
+exports.vote = async (req, res) => {
+  try {
+    const { candidate } = req.body;
+    const userId = req.user.id;
+
+    const vote = await Vote.create({ candidate, userId });
+    res.json({ message: "Vote cast successfully", vote });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.getVotes = async (req, res) => {
+  try {
+    const votes = await Vote.findAll();
+    res.json(votes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+🔹 Voting Routes: routes/voteRoutes.js
+const express = require("express");
+const { vote, getVotes } = require("../controllers/voteController");
+const authMiddleware = require("../middleware/authMiddleware");
+
+const router = express.Router();
+
+router.post("/vote", authMiddleware, vote);
+router.get("/votes", authMiddleware, getVotes);
+
+module.exports = router;
+
+Environment Variables: 
+DB_NAME=voting_db
+DB_USER=root
+DB_PASS=yourpassword
+DB_HOST=localhost
+JWT_SECRET=mysecretkey
+
